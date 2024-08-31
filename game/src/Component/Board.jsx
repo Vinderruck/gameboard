@@ -63,13 +63,21 @@ const Chexkrowfour = ()=>{
 
 
 const Movedown = () =>{
+    for(let i = 0; i < 64 - width ; i++){
+
+         const firstRow = [0,1,2,3,4,5,6,7];
+         const isFirst = firstRow.includes(i);
 
 
-    for(let i = 0; i < 64-width ; i++){
+         if(isFirst && CurrentColor[i]=== ''){
+            let RandomNumber = Math.floor(Math.random() * Colors.length);
+            CurrentColor[i] = Colors[RandomNumber]
+        }
         if(CurrentColor[i + width]===''){
             CurrentColor[i + width]=CurrentColor[i];
             CurrentColor[i]='';
         }
+       
     }
 }
 
@@ -113,8 +121,20 @@ const Movedown = () =>{
     <motion.div claassName="board">
         <div className="boardgame">
             {CurrentColor.map((color,index)=>(
-  <img alt='image' style={{backgroundColor:color}}/>
+  <img alt='image' style={{backgroundColor:color}}
+  
+  
+  data-id={index}
+  draggable={true}
+  onDragEnd={{}}
+  onDragStart={{}}
+  onDragEnter={(e)=>e.preventDefault()}
+  onDragLeave={(e)=>e.preventDefault()}
+  omDragOver={(e)=>e.preventDefault()}
+  onDrop={{}}
+  />
             ))}
+            
           
         </div>
     </motion.div>
