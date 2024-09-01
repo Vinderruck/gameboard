@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {motion} from 'framer-motion';
- 
+ import Score from './ScoreBoard/Score';
 import blank from  './assets/blank.jpeg'
  import red from './assets/red.jpeg';
  import blue from './assets/blue.jpeg';
@@ -25,14 +25,15 @@ const Board = () => {
     const [CurrentColor, setCurrentColor] = useState([])
   const [SquareBeignDragged, setSquareBeignDragged] = useState(null);
   const [SquareBeignReplaced, setSquareBeignReplaced] = useState(null)
-
-
+   const [ScoreDisplay, setScoreDisplay] = useState(0)
 
     const Chexkthree = ()=>{
         for(let i= 0;  i <= 47; i++){
             const threesqure = [ i, i + width, i + width * 2];
             const DescidedColor = CurrentColor[i]
-            if(threesqure.every(Squar => CurrentColor[Squar] === DescidedColor)){
+            const isblank = CurrentColor[i] === blank
+            if(threesqure.every(Squar => CurrentColor[Squar] === DescidedColor && !isblank)){
+setScoreDisplay(()=>ScoreDisplay + 3)
                 threesqure.forEach(Squar => CurrentColor[Squar]=blank)
                 return true
             }
@@ -43,7 +44,9 @@ const Board = () => {
         for(let i= 0;  i <=39; i++){
             const foursqure = [ i, i + width, i + width * 2, i + width * 3];
             const DescidedColor = CurrentColor[i]
-            if(foursqure.every(Squar => CurrentColor[Squar] === DescidedColor)){
+            const isblank = CurrentColor[i] === blank
+            if(foursqure.every(Squar => CurrentColor[Squar] === DescidedColor && !isblank)){
+                setScoreDisplay(()=>ScoreDisplay + 4)
                 foursqure.forEach(Squar => CurrentColor[Squar]= blank)
                 return true
             }
@@ -56,7 +59,9 @@ const Chexkrowthree = ()=>{
         const DescidedColor = CurrentColor[i];
         const invalid=[6,7,14,15,22,23,30,31,38,39,46,47,54,55,63,64]
         if(invalid.includes(i))continue
-        if( rowthreesqure.every(Squar => CurrentColor[Squar] === DescidedColor)){
+        const isblank = CurrentColor[i] === blank
+        if( rowthreesqure.every(Squar => CurrentColor[Squar] === DescidedColor && !blank)){
+            setScoreDisplay(()=>ScoreDisplay + 3)
             rowthreesqure.forEach(Squar => CurrentColor[Squar]=  blank)
             return true
         }
@@ -68,7 +73,9 @@ const Chexkrowfour = ()=>{
         const DescidedColor = CurrentColor[i]
         const invalid=[5,6,7,13 ,14,15,21,22,23,29,30,31,37,38,39,45,46,47,53,54,55,62,63,64];
         if(invalid.includes(i))continue
-        if(fourrowsqure.every(Squar => CurrentColor[Squar] === DescidedColor)){
+        const isblank = CurrentColor[i] === blank
+        if(fourrowsqure.every(Squar => CurrentColor[Squar] === DescidedColor && !isblank)){
+            setScoreDisplay(()=>ScoreDisplay + 4)
             fourrowsqure.forEach(Squar => CurrentColor[Squar]=   blank)
             return true
         }
@@ -180,10 +187,10 @@ setSquareBeignReplaced(e.target)
 
 
   return (
-    <motion.div className="board">
+    <motion.div  animate={{x:-7 , x:7}} transition={{duration:10}}className="board">
         <div className="boardgame">
             {CurrentColor.map((color,index)=>(
-  <img  src={{color}} alt={color}
+  <img  src={color} alt={color}
   key={index}
   
   data-id={index}
@@ -200,6 +207,8 @@ setSquareBeignReplaced(e.target)
             
           
         </div>
+
+        <Score Score={ScoreDisplay}/>
     </motion.div>
   )
 }

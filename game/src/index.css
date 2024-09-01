@@ -4,6 +4,10 @@
 .board{
     padding:30px;
     display:flex;
+    aign-items:center;
+    justify-content:center;
+    display:flex;
+    
 }
 .boardgame{
     display:flex;
@@ -14,4 +18,13 @@
 img{
     height:70px;
     width:70px
+}
+.ScoreBoard{
+    width:80px;
+    border:1px solid black;
+    height:50px;
+ background:linear-gradient( red,blue,Yellow,pink,green,Brown);
+ justify-content:center;
+ display:flex;
+ align-items:center;
 }
